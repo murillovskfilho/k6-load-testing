@@ -1,0 +1,21 @@
+{
+  "name": "k6-load-testing",
+  "version": "1.0.0",
+  "description": "k6 load, stress and spike tests against a small Node/PostgreSQL API, with a measured bottleneck, fix and written analysis",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "up": "docker compose up -d --build --wait",
+    "down": "docker compose down",
+    "reset": "docker compose down -v",
+    "smoke": "docker compose run --rm k6 run /scripts/smoke.js",
+    "bench": "node scripts/bench.mjs",
+    "bench:before": "node scripts/bench.mjs --variant before",
+    "bench:after": "node scripts/bench.mjs --variant after",
+    "report": "node scripts/report.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
