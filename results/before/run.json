@@ -1,0 +1,48 @@
+{
+  "variant": "before",
+  "date": "2026-11-10T13:20:13.858Z",
+  "commit": "fcaa20d",
+  "host": {
+    "os": "Windows_NT 10.0.26200",
+    "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+    "logicalCpus": 8
+  },
+  "docker": {
+    "version": "29.9.1",
+    "os": "Docker Desktop",
+    "cpus": 8,
+    "memoryBytes": 16531480576
+  },
+  "limits": {
+    "db": "2 CPUs, 2 GB",
+    "api": "1 CPU, 512 MB, pg pool max 10",
+    "k6": "2 CPUs, 1 GB"
+  },
+  "k6": "k6 v1.0.0 (commit/41b4984b75-dirty, go1.24.2, linux/amd64)",
+  "runs": [
+    {
+      "scenario": "smoke",
+      "started": "2026-11-10T13:06:06.661Z",
+      "exitCode": 0,
+      "thresholdsPassed": true
+    },
+    {
+      "scenario": "load",
+      "started": "2026-11-10T13:06:51.716Z",
+      "exitCode": 99,
+      "thresholdsPassed": false
+    },
+    {
+      "scenario": "stress",
+      "started": "2026-11-10T13:11:35.837Z",
+      "exitCode": 99,
+      "thresholdsPassed": false
+    },
+    {
+      "scenario": "spike",
+      "started": "2026-11-10T13:16:54.724Z",
+      "exitCode": 99,
+      "thresholdsPassed": false
+    }
+  ]
+}

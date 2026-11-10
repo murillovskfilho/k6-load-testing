@@ -1,0 +1,10 @@
+ calls | total_ms | mean_ms | pct_of_db_time |                                           query                                            
+-------+----------+---------+----------------+--------------------------------------------------------------------------------------------
+  7093 |  5994223 |  845.09 |           99.9 | SELECT status, location, occurred_at FROM tracking_events WHERE parcel_id = $1 ORDER BY oc
+  9014 |     3959 |    0.44 |            0.1 | SELECT id FROM parcels WHERE tracking_code = $1
+   581 |     1174 |    2.02 |            0.0 | WITH p AS ( UPDATE parcels SET status = $2, updated_at = now() WHERE tracking_code = $1 RE
+  1719 |      605 |    0.35 |            0.0 | SELECT tracking_code, status, origin, destination, created_at, updated_at FROM parcels WHE
+   581 |       25 |    0.04 |            0.0 | SELECT $2 FROM ONLY "public"."parcels" x WHERE "id" OPERATOR(pg_catalog.=) $1 FOR KEY SHAR
+   131 |        1 |    0.01 |            0.0 | SELECT $1
+(6 rows)
+

@@ -1,0 +1,34 @@
+-- SELECT status, location, occurred_at FROM tracking_events
+WHERE parcel_id = 123456 ORDER BY occurred_at DESC LIMIT 50
+
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=43937.08..43938.71 rows=14 width=26) (actual time=29.567..31.381 rows=23 loops=1)
+   Buffers: shared hit=2006 read=25380
+   ->  Gather Merge  (cost=43937.08..43938.71 rows=14 width=26) (actual time=29.565..31.377 rows=23 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=2006 read=25380
+         ->  Sort  (cost=42937.05..42937.07 rows=7 width=26) (actual time=27.548..27.550 rows=8 loops=3)
+               Sort Key: occurred_at DESC
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2006 read=25380
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Parallel Seq Scan on tracking_events  (cost=0.00..42936.95 rows=7 width=26) (actual time=13.979..27.463 rows=8 loops=3)
+                     Filter: (parcel_id = 123456)
+                     Rows Removed by Filter: 999989
+                     Buffers: shared hit=1932 read=25380
+ Planning:
+   Buffers: shared hit=88
+ Planning Time: 0.365 ms
+ Execution Time: 31.428 ms
+(20 rows)
+
+
+-- indexes on tracking_events
+      indexname       |                                      indexdef                                       
+----------------------+-------------------------------------------------------------------------------------
+ tracking_events_pkey | CREATE UNIQUE INDEX tracking_events_pkey ON public.tracking_events USING btree (id)
+(1 row)
+

@@ -1,0 +1,32 @@
+-- SELECT status, location, occurred_at FROM tracking_events
+WHERE parcel_id = 123456 ORDER BY occurred_at DESC LIMIT 50
+
+                                                                           QUERY PLAN                                                                           
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=75.78..75.83 rows=18 width=25) (actual time=0.334..0.336 rows=23 loops=1)
+   Buffers: shared hit=29 read=3
+   ->  Sort  (cost=75.78..75.83 rows=18 width=25) (actual time=0.333..0.334 rows=23 loops=1)
+         Sort Key: occurred_at DESC
+         Sort Method: quicksort  Memory: 26kB
+         Buffers: shared hit=29 read=3
+         ->  Bitmap Heap Scan on tracking_events  (cost=4.57..75.41 rows=18 width=25) (actual time=0.250..0.314 rows=23 loops=1)
+               Recheck Cond: (parcel_id = 123456)
+               Heap Blocks: exact=23
+               Buffers: shared hit=26 read=3
+               ->  Bitmap Index Scan on idx_tracking_events_parcel_id_occurred_at  (cost=0.00..4.56 rows=18 width=0) (actual time=0.241..0.242 rows=23 loops=1)
+                     Index Cond: (parcel_id = 123456)
+                     Buffers: shared hit=3 read=3
+ Planning:
+   Buffers: shared hit=108 read=2
+ Planning Time: 0.471 ms
+ Execution Time: 0.366 ms
+(17 rows)
+
+
+-- indexes on tracking_events
+                 indexname                 |                                                          indexdef                                                          
+-------------------------------------------+----------------------------------------------------------------------------------------------------------------------------
+ tracking_events_pkey                      | CREATE UNIQUE INDEX tracking_events_pkey ON public.tracking_events USING btree (id)
+ idx_tracking_events_parcel_id_occurred_at | CREATE INDEX idx_tracking_events_parcel_id_occurred_at ON public.tracking_events USING btree (parcel_id, occurred_at DESC)
+(2 rows)
+
